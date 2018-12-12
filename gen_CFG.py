@@ -1,11 +1,5 @@
-import keras
 import numpy as np
 import sys
-
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Activation, LSTM, RNN, GRU
-from keras.optimizers import RMSprop, SGD, Adam, Nadam
-from keras.callbacks import ModelCheckpoint
 
 sys.path.append("../SMAC3") # wherever SMAC3 install is
 
@@ -38,12 +32,12 @@ def main():
 
   activation = CategoricalHyperparameter("activation", ['relu', 'sigmoid', 'tanh'], default_value='sigmoid')
   optimizer = CategoricalHyperparameter("optimizer", ['adam', 'sgd', 'nadam', 'RMSprop'], default_value='adam')
-  optimizer_lr = CategoricalHyperparameter("optimizer_lr", [.0001, .0003, .001, .003, .01], default_value=.0003)
+  optimizer_lr = CategoricalHyperparameter("optimizer_lr", [.001, .003, .006, .01, 0.03], default_value=.006)
   learning_decay_rate = UniformFloatHyperparameter("learning_decay_rate", 0, 0.9, default_value=.6)
 
   # nn_type = CategoricalHyperparameter("nn_type", ['RNN', 'LSTM', 'GRU'], default_value='RNN')
 
-  epochs = CategoricalHyperparameter("epochs", [20], default_value=10)
+  epochs = CategoricalHyperparameter("epochs", [20], default_value=20)
 
   cs.add_hyperparameters([cell_size, n_cell, dropout,
           activation, optimizer, optimizer_lr, learning_decay_rate, epochs])

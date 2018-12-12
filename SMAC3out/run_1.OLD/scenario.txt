@@ -1,0 +1,17 @@
+initial_incumbent = DEFAULT
+wallclock_limit = inf
+abort_on_first_run_crash = True
+paramfile = C:\NNwork\HFSF\SMAC3out\run_1\configspace.pcs
+output_dir = C:\NNwork\HFSF\SMAC3out
+maxR = 2000
+overall_obj = par10
+shared_model = False
+runcount_limit = 128.0
+tuner-timeout = inf
+cost_for_crash = 2147483647.0
+always_race_default = False
+deterministic = True
+minR = 1
+run_obj = quality
+intensification_percentage = 0.5
+execdir = .

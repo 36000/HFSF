@@ -1,3 +1,17 @@
+import keras
+
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, Activation, LSTM, RNN, GRU
+from keras.optimizers import RMSprop, SGD, Adam, Nadam
+from keras.callbacks import ModelCheckpoint
+
+from data import getReadyData
+
+import numpy as np
+
+X_train, X_val, X_test, y_train, y_val, y_test = getReadyData()
+a=2
+
 def rnn_from_cfg(cfg):
   saved_model_path = './SMAC3out/models/' \
                     + str(cfg['cell_size']) + '_' \
@@ -10,7 +24,8 @@ def rnn_from_cfg(cfg):
 
   model = Sequential()
 
-  for i in range(cfg['n_cell']):
+  model.add(LSTM(cfg['cell_size'], input_shape=(20, 2)))
+  for i in range(cfg['n_cell'] - 1):
       model.add(LSTM(cfg['cell_size']))
 
   model.add(Dropout(cfg['dropout']))
@@ -31,7 +46,7 @@ def rnn_from_cfg(cfg):
   model.summary()
 
   model.fit(X_train, y_train, batch_size=1024, epochs=cfg['epochs'],
-      validation_split=0.2,
+      validation_data=[X_val, y_val],
       callbacks=[ModelCheckpoint(saved_model_path, monitor='val_loss',
         verbose=2, save_best_only=True)])
 

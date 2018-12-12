@@ -1,0 +1,1 @@
+{"wallclock_time": 0.0, "incumbent": ["activation=''sigmoid''", "cell_size='128'", "dropout='0.2'", "epochs='20'", "learning_decay_rate='0.6'", "n_cell='1'", "optimizer=''adam''", "optimizer_lr='0.0003'"], "total_cpu_time": null, "cpu_time": 0, "cost": 2147483648, "evaluations": 0}
