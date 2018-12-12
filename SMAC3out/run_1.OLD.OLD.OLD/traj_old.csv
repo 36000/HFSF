@@ -1,0 +1,2 @@
+"CPU Time Used","Estimated Training Performance","Wallclock Time","Incumbent ID","Automatic Configurator (CPU) Time","Configuration..."
+0.000000, 2147483648.000000, 0.000000, 1, 0.000000, activation=''sigmoid'', cell_size='128', dropout='0.2', epochs='20', learning_decay_rate='0.6', n_cell='1', optimizer=''adam'', optimizer_lr='0.006'

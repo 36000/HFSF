@@ -1,26 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from random import randint
-import sys
-
-from data import getRawData, cutData, evenData, saveProData
-
-def newWindow(title='UNTITLED'):
-  plt.figure(randint(-sys.maxsize, sys.maxsize)).suptitle(title, fontsize=16)
-
-def lundPlot(data, dataName='?', binMin=0, binMax=8, binWidth=1, zoom=50):
-  deltaR = data[:, :, 0].flatten()
-  Z = data[:, :, 1].flatten()
-
-  deltaR = deltaR[deltaR != 10]
-  Z = Z[Z != 10]
-
-  logiDeltaR = np.log(np.divide(1, deltaR))
-  logiZ = np.log(np.divide(1, Z))
-
-  newWindow('Lund Plot for ' + dataName)
-  plt.hist2d(logiDeltaR, logiZ, bins=np.linspace(binMin, binMax, (binMax-binMin)*zoom), cmap='Spectral')
+from data import getRawData, cutData, evenData, saveProData, SIG, BG
+from gen_plots import lundPlot
 
 def main():
   sig, bg = getRawData()
@@ -38,8 +20,8 @@ def main():
 
   sig, bg = evenData(sig, bg)
 
-  lundPlot(sig, 'W')
-  lundPlot(bg, 'QCD')
+  lundPlot(sig, SIG)
+  lundPlot(bg, BG)
   plt.show()
 
   saveProData(sig, bg)

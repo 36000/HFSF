@@ -16,6 +16,7 @@ def rnn_from_cfg(cfg):
   saved_model_path = './SMAC3out/models/' \
                     + str(cfg['cell_size']) + '_' \
                     + str(cfg['n_cell']) + '_' \
+                    + str(cfg['nn_type']) + '_' \
                     + str(cfg['dropout']) + '_' \
                     + cfg['activation'] + '_' \
                     + cfg['optimizer'] + '_' \
@@ -24,10 +25,23 @@ def rnn_from_cfg(cfg):
 
   model = Sequential()
 
-  model.add(LSTM(cfg['cell_size'], input_shape=(20, 2)))
-  for i in range(cfg['n_cell'] - 1):
+  if (cfg['n_cell'] == 2):
+    if cfg['nn_type'] == 'LSTM':
+      model.add(LSTM(cfg['cell_size'], return_sequences=True, input_shape=(20, 2)))
       model.add(LSTM(cfg['cell_size']))
-
+    elif cfg['nn_type'] == 'RNN':
+      model.add(RNN(cfg['cell_size'], return_sequences=True, input_shape=(20, 2)))
+      model.add(RNN(cfg['cell_size']))
+    else:
+      model.add(GRU(cfg['cell_size'], return_sequences=True, input_shape=(20, 2)))
+      model.add(GRU(cfg['cell_size']))
+  else:
+    if cfg['nn_type'] == 'LSTM':
+      model.add(LSTM(cfg['cell_size'], input_shape=(20, 2)))
+    elif cfg['nn_type'] == 'RNN':
+      model.add(RNN(cfg['cell_size'], input_shape=(20, 2)))
+    else:
+      model.add(GRU(cfg['cell_size'], input_shape=(20, 2)))
   model.add(Dropout(cfg['dropout']))
 
   model.add(Dense(2))

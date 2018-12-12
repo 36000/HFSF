@@ -10,7 +10,7 @@ JZ3W = 'jz3w'
 JZ7W = 'jz7w'
 
 SIG = W
-BG = JZ3W
+BG = Z
 
 RAW_SIG_PATH = D_PATH + SIG + '.h5'
 RAW_BG_PATH = D_PATH + BG + '.h5'
@@ -50,6 +50,9 @@ def evenData(data1, data2):
 def saveProData(sig, bg):
   np.save(SIG_PATH, sig)
   np.save(BG_PATH, bg)
+
+def getProData():
+  return [np.load(SIG_PATH), np.load(BG_PATH)]
 
 def prepData():
   sig = np.load(SIG_PATH)[:, :, 0:2]
