@@ -4,9 +4,8 @@ from data import getReadyData
 
 
 # ROC curve drawer, given generator.
-def __draw_roc(model, x, y, verbose=2, save_tag=''):
+def __draw_roc(model, x, y, verbose=1, label=''):
     import matplotlib.pyplot as plt
-    import matplotlib.gridspec as gridspec
 
     y_predict = model.predict(x, verbose=verbose)
 
@@ -15,32 +14,24 @@ def __draw_roc(model, x, y, verbose=2, save_tag=''):
     # Needed to create two subplots with different sizes.
     # If other ratios are needed change height_ratios.
     plt.figure(figsize=(6, 8))
-    gs = gridspec.GridSpec(2, 1, height_ratios=[4, 1])
 
-    main = plt.subplot(gs[0])
+    main = plt.subplot()
     main.set_yscale('log')
     main.grid(True, color='gray', linestyle='--', linewidth=1, alpha=0.5)
     plt.xlim([0.1, 1.])
     plt.ylim([1., 10.**3])
 
-    ratio = plt.subplot(gs[1])
-    ratio.grid(True, color='gray', linestyle='--', linewidth=1, alpha=0.5)
-    plt.xlim([0.1, 1.])
-    plt.ylim([0.1, 1.1])
-
     main.plot(np.arange(0.1, 1.0, 0.001), np.divide(1., np.arange(0.1, 1.0, 0.001)), 'k--', label='Luck (AUC = 0.5000)')
 
     print('Creating curve...')
-    main.plot(tpr, fpr, color='b',
-              label='GRU (AUC = {0:.4f})'.format(auc))
+    main.plot(tpr, fpr, color='b', label='GRU {} (AUC = {0:.4f})'.format(label, auc))
 
     main.set_ylabel("1 / [Background Efficiency]")
     main.set_title("ROC Curve for GRU")
     main.legend(loc=1, frameon=False)
-    plt.tight_layout()
-    plt.savefig("ROC Curve {}".format(save_tag))
-    plt.clf()
     print('ROC Curve successfully created.')
+
+    return main
 
 
 # Calculates and return true positive rate, false positive rate, area under curve,
