@@ -1,0 +1,50 @@
+import numpy as np 
+from data import getReadyData
+from gen_plots import lundPlot
+import matplotlib.pyplot as plt
+
+def model_to_val():
+    X_train, _, _, y_train, _, _ = getReadyData()
+    from keras.models import load_model
+    model = load_model('./hand_made_models/128_2_GRU_0.5_sigmoid_adam_0.03_0.09.hdf5')
+    y_hat = model.predict(X_train, verbose=1)
+
+    y_hat = np.argmax(y_hat, axis=1)
+    y_train = np.argmax(y_train, axis=1)
+
+    np.save('true_pos.npy', np.logical_and(y_hat == 1, y_train == 1))
+    np.save('false_pos.npy', np.logical_and(y_hat == 1, y_train == 0))
+    np.save('false_neg.npy', np.logical_and(y_hat == 0, y_train == 1))
+    np.save('true_neg.npy', np.logical_and(y_hat == 0, y_train == 0))
+
+def lund_diffs(isolate = 21):
+    X_train, _, _, _, _, _ = getReadyData()
+    tp = np.load('true_pos.npy')
+    fp = np.load('false_pos.npy')
+    fn = np.load('false_neg.npy')
+    tn = np.load('true_neg.npy')
+
+    if (isolate != 21): # advance sort
+        for i in range(X_train.shape[0]):
+            X_i = X_train[i]
+            X_temp = np.multiply(X_i, np.multiply((X_i == 10.0), -1))
+            X_i = X_i[np.argsort(np.multiply(X_temp[:, 1], -1))]
+            X_train[i] = X_i
+
+        lundPlot(X_train[tp, isolate-1:isolate], 'True Positives (W c.a. W)')
+        lundPlot(X_train[fp, isolate-1:isolate], 'False Positives (QCD c.a. W)')
+        lundPlot(X_train[fn, isolate-1:isolate], 'False Negatives (W c.a. QCD)')
+        lundPlot(X_train[tn, isolate-1:isolate], 'True Negatives (QCD c.a. QCD)')
+    else:
+        lundPlot(X_train[tp], 'True Positives (W c.a. W)')
+        lundPlot(X_train[fp], 'False Positives (QCD c.a. W)')
+        lundPlot(X_train[fn], 'False Negatives (W c.a. QCD)')
+        lundPlot(X_train[tn], 'True Negatives (QCD c.a. QCD)')
+
+    plt.show()
+
+def main():
+    lund_diffs(21)
+
+if __name__ == '__main__':
+  main()
