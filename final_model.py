@@ -25,8 +25,8 @@ def hand_model(cell_size, n_cell, epochs=10, dropout = 0.5, activation = 'sigmoi
   model.add(Masking(10.0, input_shape=(20, 2)))
 
   for i in range(n_cell-1):
-    model.add(LSTM(cell_size, return_sequences=True))
-  model.add(LSTM(cell_size))
+    model.add(GRU(cell_size, return_sequences=True))
+  model.add(GRU(cell_size))
 
   model.add(Dropout(dropout))
 
@@ -45,7 +45,7 @@ def hand_model(cell_size, n_cell, epochs=10, dropout = 0.5, activation = 'sigmoi
 
 
 def main():
-    hand_model(128, 3)
+    hand_model(128, 2, epochs=50)
 
 if __name__ == '__main__':
   main()

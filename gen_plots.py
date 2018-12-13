@@ -45,10 +45,10 @@ def lundDiff(sig, bg, binMin=0, binMax=8, binWidth=1, zoom=50):
 
   data2hist, _, _ = np.histogram2d(logiDeltaR, logiZ, bins=np.linspace(binMin, binMax, (binMax-binMin)*zoom))
 
-  diff_hist = np.subtract(data1hist, data2hist)
+  diff_hist = np.rot90(np.subtract(data1hist, data2hist))
 
   newWindow(SIG + ' minus ' + BG + ' Plot')
-  plt.imshow(diff_hist, origin='lower')
+  plt.imshow(diff_hist, cmap='Spectral')
 
 def main():
     sig, bg = getProData()
