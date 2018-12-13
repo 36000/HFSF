@@ -3,7 +3,7 @@ import keras
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, LSTM, SimpleRNN, GRU, Masking
 from keras.optimizers import RMSprop, SGD, Adam, Nadam
-from keras.callbacks import ModelCheckpoint
+from keras.callbacks import ModelCheckpoint, EarlyStopping
 
 from data import getReadyData
 
@@ -39,13 +39,14 @@ def hand_model(cell_size, n_cell, epochs=10, dropout = 0.5, activation = 'sigmoi
   model.fit(X_train, y_train, batch_size=1024, epochs=epochs,
       validation_data=[X_val, y_val],
       callbacks=[ModelCheckpoint(saved_model_path, monitor='val_loss',
-        verbose=2, save_best_only=True)])
+        verbose=2, save_best_only=True), \
+        EarlyStopping(monitor='val_loss', patience=5)])
 
   np.save('final_eval.npy', model.evaluate(X_test, y_test))
 
 
 def main():
-    hand_model(128, 2, epochs=50)
+    hand_model(128, 2, epochs=200)
 
 if __name__ == '__main__':
   main()

@@ -1,4 +1,6 @@
 import numpy as np
+from keras.models import load_model
+from data import getReadyData
 
 
 # ROC curve drawer, given generator.
@@ -30,10 +32,10 @@ def __draw_roc(model, x, y, verbose=2, save_tag=''):
 
     print('Creating curve...')
     main.plot(tpr, fpr, color='b',
-              label='LSTM (AUC = %0.4f)'.format(auc))
+              label='GRU (AUC = {0:.4f})'.format(auc))
 
     main.set_ylabel("1 / [Background Efficiency]")
-    main.set_title("ROC Curve for LSTM")
+    main.set_title("ROC Curve for GRU")
     main.legend(loc=1, frameon=False)
     plt.tight_layout()
     plt.savefig("ROC Curve {}".format(save_tag))
@@ -74,3 +76,14 @@ def __multi_roc_data(y_true, y_pred):
     fpr = np.divide(1., fpr)  # Revert fpr for them weird roc curves
 
     return tpr, fpr, auc_score
+
+
+def main():
+    X_train, X_val, X_test, y_train, y_val, y_test = getReadyData()
+    model = load_model('./hand_made_models/128_2_GRU_0.5_sigmoid_adam_0.03_0.09.hdf5')
+    __draw_roc(model, X_train[:X_train.shape[0]//3], y_train[:X_train.shape[0]//3], verbose=1, save_tag='Train.png')
+    __draw_roc(model, X_val, y_val, verbose=1, save_tag='Val.png')
+    __draw_roc(model, X_test, y_test, verbose=1, save_tag='Test.png')
+
+if __name__ == '__main__':
+  main()
