@@ -41,9 +41,11 @@ def hand_model(cell_size, n_cell, epochs=10, dropout = 0.5, activation = 'sigmoi
       callbacks=[ModelCheckpoint(saved_model_path, monitor='val_loss',
         verbose=2, save_best_only=True)])
 
+  np.save('final_eval.npy', model.evaluate(X_test, y_test))
+
 
 def main():
-    hand_model(64, 2)
+    hand_model(128, 3)
 
 if __name__ == '__main__':
   main()
