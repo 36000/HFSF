@@ -1,5 +1,3 @@
-import keras
-
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, LSTM, SimpleRNN, GRU, Masking
 from keras.optimizers import RMSprop, SGD, Adam, Nadam
@@ -39,7 +37,7 @@ def rnn_from_cfg(cfg):
     if cfg['nn_type'] == 'LSTM':
       model.add(LSTM(cfg['cell_size']))
     elif (cfg['nn_type'] == 'RNN'):
-      model.add(RNN(cfg['cell_size']))
+      model.add(SimpleRNN(cfg['cell_size']))
     else:
       model.add(GRU(cfg['cell_size']))
   model.add(Dropout(cfg['dropout']))
