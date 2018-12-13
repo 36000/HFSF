@@ -1,7 +1,7 @@
 import keras
 
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, Activation, LSTM, RNN, GRU, Masking
+from keras.layers import Dense, Dropout, Activation, LSTM, SimpleRNN, GRU, Masking
 from keras.optimizers import RMSprop, SGD, Adam, Nadam
 from keras.callbacks import ModelCheckpoint
 
@@ -10,7 +10,6 @@ from data import getReadyData
 import numpy as np
 
 X_train, X_val, X_test, y_train, y_val, y_test = getReadyData()
-a=2
 
 def rnn_from_cfg(cfg):
   saved_model_path = './SMAC3out/models/' \
@@ -31,8 +30,8 @@ def rnn_from_cfg(cfg):
       model.add(LSTM(cfg['cell_size'], return_sequences=True))
       model.add(LSTM(cfg['cell_size']))
     elif (cfg['nn_type'] == 'RNN'):
-      model.add(RNN(cfg['cell_size'], return_sequences=True))
-      model.add(RNN(cfg['cell_size']))
+      model.add(SimpleRNN(cfg['cell_size'], return_sequences=True))
+      model.add(SimpleRNN(cfg['cell_size']))
     else:
       model.add(GRU(cfg['cell_size'], return_sequences=True))
       model.add(GRU(cfg['cell_size']))

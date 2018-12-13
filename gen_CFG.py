@@ -49,8 +49,8 @@ def main():
   smac = SMAC(scenario=scenario, rng=np.random.RandomState(23), tae_runner=rnn_from_cfg)
 
   best_model = smac.optimize()
-  print_incumb(best_cfg)
-  np.save( "C:\\NNwork\\HFSF\\SMAC3out\\best.cfg", best_cfg)
+  print_incumb(best_model)
+  np.save( "C:\\NNwork\\HFSF\\SMAC3out\\best.cfg", best_model)
 
 if __name__ == '__main__':
   main()

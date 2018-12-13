@@ -10,7 +10,7 @@ JZ3W = 'jz3w'
 JZ7W = 'jz7w'
 
 SIG = W
-BG = Z
+BG = JZ3W
 
 RAW_SIG_PATH = D_PATH + SIG + '.h5'
 RAW_BG_PATH = D_PATH + BG + '.h5'

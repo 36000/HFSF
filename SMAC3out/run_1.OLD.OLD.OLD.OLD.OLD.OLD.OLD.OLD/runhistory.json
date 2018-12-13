@@ -1,0 +1,1 @@
+{"configs": {"1": {"learning_decay_rate": 0.6, "nn_type": "LSTM", "optimizer": "adam", "dropout": 0.5, "cell_size": 128, "epochs": 10, "optimizer_lr": 0.01, "n_cell": 2, "activation": "sigmoid"}}, "data": [[[1, null, 0], [0.4944717235104293, 1472.6401326656342, {"__enum__": "StatusType.SUCCESS"}, {}]]]}

@@ -1,2 +1,8 @@
 "CPU Time Used","Estimated Training Performance","Wallclock Time","Incumbent ID","Automatic Configurator (CPU) Time","Configuration..."
 0.000000, 2147483648.000000, 0.000000, 1, 0.000000, activation=''sigmoid'', cell_size='128', dropout='0.5', epochs='10', learning_decay_rate='0.6', n_cell='2', nn_type=''LSTM'', optimizer=''adam'', optimizer_lr='0.01'
+1466.985066, 0.493175, 1466.987061, 1, 0.001995, activation=''sigmoid'', cell_size='128', dropout='0.5', epochs='10', learning_decay_rate='0.6', n_cell='2', nn_type=''LSTM'', optimizer=''adam'', optimizer_lr='0.01'
+2230.103529, 0.486827, 2230.146414, 2, 0.042885, activation=''sigmoid'', cell_size='128', dropout='0.5', epochs='10', learning_decay_rate='0.3721422758484719', n_cell='2', nn_type=''RNN'', optimizer=''adam'', optimizer_lr='0.003'
+3434.468878, 0.475202, 3434.513758, 3, 0.044880, activation=''sigmoid'', cell_size='128', dropout='0.5', epochs='10', learning_decay_rate='0.6566404987037858', n_cell='2', nn_type=''GRU'', optimizer=''adam'', optimizer_lr='0.03'
+7310.454031, 0.417478, 7310.594654, 4, 0.140623, activation=''sigmoid'', cell_size='128', dropout='0.5', epochs='10', learning_decay_rate='0.10782669782293819', n_cell='2', nn_type=''GRU'', optimizer=''adam'', optimizer_lr='0.03'
+13755.899354, 0.416985, 13756.188579, 5, 0.289224, activation=''sigmoid'', cell_size='128', dropout='0.5', epochs='10', learning_decay_rate='0.08764322685385763', n_cell='2', nn_type=''GRU'', optimizer=''adam'', optimizer_lr='0.03'
+20685.103483, 0.415913, 20685.550287, 6, 0.446804, activation=''sigmoid'', cell_size='128', dropout='0.5', epochs='10', learning_decay_rate='0.008751419252196236', n_cell='2', nn_type=''RNN'', optimizer=''adam'', optimizer_lr='0.01'
