@@ -1,7 +1,7 @@
 import keras
 
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, Activation, LSTM, RNN, GRU
+from keras.layers import Dense, Dropout, Activation, LSTM, RNN, GRU, Masking
 from keras.optimizers import RMSprop, SGD, Adam, Nadam
 from keras.callbacks import ModelCheckpoint
 
@@ -24,24 +24,25 @@ def rnn_from_cfg(cfg):
                     + str(cfg['learning_decay_rate']) + '.hdf5'
 
   model = Sequential()
+  model.add(Masking(10.0, input_shape=(20, 2)))
 
   if (cfg['n_cell'] == 2):
     if cfg['nn_type'] == 'LSTM':
-      model.add(LSTM(cfg['cell_size'], return_sequences=True, input_shape=(20, 2)))
+      model.add(LSTM(cfg['cell_size'], return_sequences=True))
       model.add(LSTM(cfg['cell_size']))
-    elif cfg['nn_type'] == 'RNN':
-      model.add(RNN(cfg['cell_size'], return_sequences=True, input_shape=(20, 2)))
+    elif (cfg['nn_type'] == 'RNN'):
+      model.add(RNN(cfg['cell_size'], return_sequences=True))
       model.add(RNN(cfg['cell_size']))
     else:
-      model.add(GRU(cfg['cell_size'], return_sequences=True, input_shape=(20, 2)))
+      model.add(GRU(cfg['cell_size'], return_sequences=True))
       model.add(GRU(cfg['cell_size']))
   else:
     if cfg['nn_type'] == 'LSTM':
-      model.add(LSTM(cfg['cell_size'], input_shape=(20, 2)))
-    elif cfg['nn_type'] == 'RNN':
-      model.add(RNN(cfg['cell_size'], input_shape=(20, 2)))
+      model.add(LSTM(cfg['cell_size']))
+    elif (cfg['nn_type'] == 'RNN'):
+      model.add(RNN(cfg['cell_size']))
     else:
-      model.add(GRU(cfg['cell_size'], input_shape=(20, 2)))
+      model.add(GRU(cfg['cell_size']))
   model.add(Dropout(cfg['dropout']))
 
   model.add(Dense(2))

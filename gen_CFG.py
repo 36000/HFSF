@@ -27,13 +27,13 @@ def print_incumb(cfg):
 def main():
   cs = ConfigurationSpace()
 
-  cell_size = CategoricalHyperparameter("cell_size", [128, 256], default_value=128)
-  n_cell = CategoricalHyperparameter("n_cell", [1, 2], default_value=2)
-  dropout = CategoricalHyperparameter("dropout", [0.2, 0.5], default_value=0.2)
+  cell_size = CategoricalHyperparameter("cell_size", [128], default_value=128) # kick up to 256
+  n_cell = CategoricalHyperparameter("n_cell", [2], default_value=2)
+  dropout = CategoricalHyperparameter("dropout", [0.5], default_value=0.5)
 
-  activation = CategoricalHyperparameter("activation", ['relu', 'sigmoid', 'tanh'], default_value='sigmoid')
-  optimizer = CategoricalHyperparameter("optimizer", ['adam', 'sgd', 'nadam', 'RMSprop'], default_value='adam')
-  optimizer_lr = CategoricalHyperparameter("optimizer_lr", [.001, .003, .006, .01, 0.03], default_value=.006)
+  activation = CategoricalHyperparameter("activation", ['sigmoid'], default_value='sigmoid')
+  optimizer = CategoricalHyperparameter("optimizer", ['adam'], default_value='adam')
+  optimizer_lr = CategoricalHyperparameter("optimizer_lr", [.001, .003, .006, .01, 0.03, 0.1], default_value=.01)
   learning_decay_rate = UniformFloatHyperparameter("learning_decay_rate", 0, 0.9, default_value=.6)
 
   nn_type = CategoricalHyperparameter("nn_type", ['RNN', 'LSTM', 'GRU'], default_value='LSTM')
@@ -43,7 +43,7 @@ def main():
   cs.add_hyperparameters([cell_size, n_cell, dropout, nn_type, 
           activation, optimizer, optimizer_lr, learning_decay_rate, epochs])
 
-  scenario = Scenario({"run_obj": "quality", "runcount-limit": 128, "cs": cs, "deterministic": "true"})
+  scenario = Scenario({"run_obj": "quality", "runcount-limit": 32, "cs": cs, "deterministic": "true"})
   scenario.output_dir_for_this_run = "C:\\NNwork\\HFSF\\SMAC3out"
   scenario.output_dir = "C:\\NNwork\\HFSF\\SMAC3out"
   smac = SMAC(scenario=scenario, rng=np.random.RandomState(23), tae_runner=rnn_from_cfg)
