@@ -2,7 +2,7 @@ import h5py
 import numpy as np
 from sklearn.model_selection import train_test_split
 
-D_PATH = '../../data/rnn/'
+D_PATH = '../data/'
 W = 'W'
 Z = 'Z'
 JZ4W = 'jz4w'

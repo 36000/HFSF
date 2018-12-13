@@ -24,13 +24,7 @@ def lund_diffs(isolate = 21):
     fn = np.load('false_neg.npy')
     tn = np.load('true_neg.npy')
 
-    if (isolate != 21): # advance sort
-        for i in range(X_train.shape[0]):
-            X_i = X_train[i]
-            X_temp = np.multiply(X_i, np.multiply((X_i == 10.0), -1))
-            X_i = X_i[np.argsort(np.multiply(X_temp[:, 1], -1))]
-            X_train[i] = X_i
-
+    if (isolate != 0): # advance sort
         lundPlot(X_train[tp, isolate-1:isolate], 'True Positives (W c.a. W)')
         lundPlot(X_train[fp, isolate-1:isolate], 'False Positives (QCD c.a. W)')
         lundPlot(X_train[fn, isolate-1:isolate], 'False Negatives (W c.a. QCD)')
@@ -44,7 +38,7 @@ def lund_diffs(isolate = 21):
     plt.show()
 
 def main():
-    lund_diffs(21)
+    lund_diffs(1)
 
 if __name__ == '__main__':
   main()

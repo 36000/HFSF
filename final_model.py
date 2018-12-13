@@ -47,7 +47,7 @@ def hand_model(cell_size, n_cell, epochs=10, dropout=0.5, activation='sigmoid', 
 
 
 def main():
-    hand_model(256, 2, epochs=200)
+    hand_model(64, 5, epochs=1000)
 
 
 if __name__ == '__main__':
