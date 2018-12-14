@@ -42,16 +42,15 @@ def hand_model(cell_size, n_cell, epochs=10, dropout=0.5, activation='sigmoid', 
               validation_data=[x_val, y_val],
               callbacks=[ModelCheckpoint(saved_model_path, monitor='val_loss',
                                          verbose=2, save_best_only=True),
-                         EarlyStopping(monitor='val_loss', patience=5)])
+                         EarlyStopping(monitor='val_loss', patience=10)])
 
     np.save('final_eval.npy', model.evaluate(x_test, y_test))
 
-    with file('history_cells{}_depth{}.p'.format(cell_size, n_cell), mode='w') as f:
+    with open('history_cells{}_depth{}.p'.format(cell_size, n_cell), mode='w') as f:
         pickle.dump(history.history, f)
 
 def main():
-    hand_model(64, 5, epochs=20)
-    hand_model(128, 3, epochs=20)
+    hand_model(64, 5, epochs=10000)
    
 
 

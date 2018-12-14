@@ -1,12 +1,11 @@
 import numpy as np
 from keras.models import load_model
 from data import getReadyData
+import matplotlib.pyplot as plt
 
 
 # ROC curve drawer, given generator.
 def __draw_roc(model, x, y, verbose=1, label=''):
-    import matplotlib.pyplot as plt
-
     y_predict = model.predict(x, verbose=verbose)
 
     tpr, fpr, auc = __multi_roc_data(y_true=y, y_pred=y_predict)
@@ -24,10 +23,10 @@ def __draw_roc(model, x, y, verbose=1, label=''):
     main.plot(np.arange(0.1, 1.0, 0.001), np.divide(1., np.arange(0.1, 1.0, 0.001)), 'k--', label='Luck (AUC = 0.5000)')
 
     print('Creating curve...')
-    main.plot(tpr, fpr, color='b', label='GRU {} (AUC = {0:.4f})'.format(label, auc))
+    main.plot(tpr, fpr, color='b', label='GRU (AUC = {0:.4f})'.format(auc))
 
     main.set_ylabel("1 / [Background Efficiency]")
-    main.set_title("ROC Curve for GRU")
+    main.set_title("ROC Curve for GRU " + label)
     main.legend(loc=1, frameon=False)
     print('ROC Curve successfully created.')
 
@@ -71,10 +70,13 @@ def __multi_roc_data(y_true, y_pred):
 
 def main():
     X_train, X_val, X_test, y_train, y_val, y_test = getReadyData()
-    model = load_model('./hand_made_models/128_2_GRU_0.5_sigmoid_adam_0.03_0.09.hdf5')
-    __draw_roc(model, X_train[:X_train.shape[0]//3], y_train[:X_train.shape[0]//3], verbose=1, save_tag='Train.png')
-    __draw_roc(model, X_val, y_val, verbose=1, save_tag='Val.png')
-    __draw_roc(model, X_test, y_test, verbose=1, save_tag='Test.png')
+    model = load_model('./hand_made_models/64_5_GRU_0.5_sigmoid_adam_0.03_0.09.hdf5')
+    __draw_roc(model, X_test, y_test, verbose=1, label='Test.png')
+    plt.show()
+    __draw_roc(model, X_train[:X_train.shape[0]//3], y_train[:X_train.shape[0]//3], verbose=1, label='Train.png')
+    plt.show()
+    __draw_roc(model, X_val, y_val, verbose=1, label='Val.png')
+    plt.show()
 
 if __name__ == '__main__':
   main()
