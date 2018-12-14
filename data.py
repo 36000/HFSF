@@ -30,8 +30,8 @@ def getRawData():
     dBg = np.array(fBg['lundjets_InDetTrackParticles'])
     fBg.close()
 
-    dSig = dSig.reshape(2 * dSig.shape[0], 20, 5)
-    dBg = dBg.reshape(2 * dBg.shape[0], 20, 5)
+    dSig = dSig.reshape(2 * dSig.shape[0], 20, dSig.shape[3])
+    dBg = dBg.reshape(2 * dBg.shape[0], 20, dBg.shape[3])
 
     return [dSig, dBg]
 
@@ -62,8 +62,8 @@ def getProData():
 
 def prepData():
     from keras.utils.np_utils import to_categorical
-    sig = np.load(SIG_PATH)[:, :, 0:2]
-    bg = np.load(BG_PATH)[:, :, 0:2]
+    sig = np.load(SIG_PATH)[:, :, 0:4]
+    bg = np.load(BG_PATH)[:, :, 0:4]
 
     y = np.concatenate((np.ones(sig.shape[0]), np.zeros(bg.shape[0])))
     X = np.concatenate((sig, bg), axis=0)
@@ -82,7 +82,7 @@ def prepData():
         hf.create_dataset('y_val', data=y_val)
 
 
-def getReadyData():
+def getReadyData(include_mass=False):
     with h5py.File(READY_DATA, 'r') as hf:
         X_train = np.array(hf['X_train'])
         y_train = np.array(hf['y_train'])
@@ -90,8 +90,10 @@ def getReadyData():
         y_test = np.array(hf['y_test'])
         X_val = np.array(hf['X_val'])
         y_val = np.array(hf['y_val'])
-    return [X_train, X_val, X_test, y_train, y_val, y_test]
-
+    if include_mass:
+      return [X_train, X_val, X_test, y_train, y_val, y_test]
+    else:
+      return [X_train[:, :, 0:2], X_val[:, :, 0:2], X_test[:, :, 0:2], y_train, y_val, y_test]
 
 if __name__ == '__main__':
     prepData()

@@ -8,6 +8,7 @@ from keras.callbacks import ModelCheckpoint, EarlyStopping
 from data import getReadyData
 
 import numpy as np
+import pickle
 
 
 def hand_model(cell_size, n_cell, epochs=10, dropout=0.5, activation='sigmoid', optimizer='adam', lr=0.03, decay=0.09, kernel_init='glorot_uniform'):
@@ -37,7 +38,7 @@ def hand_model(cell_size, n_cell, epochs=10, dropout=0.5, activation='sigmoid', 
     model.compile(optimizer=Adam(lr=lr, decay=decay), loss='categorical_crossentropy', metrics=['categorical_accuracy'])
     model.summary()
 
-    model.fit(x_train, y_train, batch_size=1024, epochs=epochs,
+    history = model.fit(x_train, y_train, batch_size=1024, epochs=epochs,
               validation_data=[x_val, y_val],
               callbacks=[ModelCheckpoint(saved_model_path, monitor='val_loss',
                                          verbose=2, save_best_only=True),
@@ -45,9 +46,13 @@ def hand_model(cell_size, n_cell, epochs=10, dropout=0.5, activation='sigmoid', 
 
     np.save('final_eval.npy', model.evaluate(x_test, y_test))
 
+    with file('history_cells{}_depth{}.p'.format(cell_size, n_cell), mode='w') as f:
+        pickle.dump(history.history, f)
 
 def main():
-    hand_model(64, 5, epochs=1000)
+    hand_model(64, 5, epochs=20)
+    hand_model(128, 3, epochs=20)
+   
 
 
 if __name__ == '__main__':

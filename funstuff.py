@@ -1,5 +1,5 @@
 import numpy as np 
-from data import getReadyData
+from data import getReadyData, getRawData
 from gen_plots import lundPlot
 import matplotlib.pyplot as plt
 
@@ -36,15 +36,6 @@ def lund_diffs(isolate = 21):
         lundPlot(X_train[tn], 'True Negatives (QCD c.a. QCD)')
 
     plt.show()
-
-def reIndex():
-    X_train, _, _, _, _, _ = getReadyData()
-    tp = np.load('true_pos.npy')
-    fp = np.load('false_pos.npy')
-    fn = np.load('false_neg.npy')
-    tn = np.load('true_neg.npy')
-
-    X_train[tp]
 
 def main():
     lund_diffs(1)
