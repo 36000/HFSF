@@ -31,7 +31,7 @@ def model_to_val():
     np.save('false_neg.npy', np.logical_and(y_hat == 0, y_train == 1))
     np.save('true_neg.npy', np.logical_and(y_hat == 0, y_train == 0))
 
-def lund_diffs(isolate = 21):
+def lund_diffs(isolate = 0):
     X_train, _, _, _, _, _ = getReadyData()
     tp = np.load('true_pos.npy')
     fp = np.load('false_pos.npy')
@@ -52,7 +52,7 @@ def lund_diffs(isolate = 21):
     plt.show()
 
 def main():
-    lund_diffs(1)
+    lund_diffs()
 
 if __name__ == '__main__':
   main()
