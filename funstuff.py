@@ -3,6 +3,20 @@ from data import getReadyData, getRawData
 from gen_plots import lundPlot
 import matplotlib.pyplot as plt
 
+def mass_get():
+    X_train, _, _, _, _, _ = getReadyData()
+    tp = np.load('true_pos.npy')
+    fp = np.load('false_pos.npy')
+    fn = np.load('false_neg.npy')
+    tn = np.load('true_neg.npy')
+
+    tp_mass = X_train[tp, 0, 3]
+    fp_mass = X_train[fp, 0, 3]
+    fn_mass = X_train[fn, 0, 3]
+    tn_mass = X_train[tn, 0, 3]
+
+    
+
 def model_to_val():
     X_train, _, _, y_train, _, _ = getReadyData()
     from keras.models import load_model
