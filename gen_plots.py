@@ -9,6 +9,11 @@ from data import getProData, SIG, BG
 def newWindow(title='UNTITLED'):
   plt.figure(randint(-sys.maxsize, sys.maxsize)).suptitle(title, fontsize=16)
 
+def lundifyPlt(plt):
+  plt.xlabel('ln 1/deltaR')
+  plt.ylabel('ln 1/Z')
+  plt.colorbar()
+
 def lundPlot(data, dataName='?', binMin=0, binMax=8, binWidth=1, zoom=50):
   deltaR = data[:, :, 0].flatten()
   Z = data[:, :, 1].flatten()
@@ -21,6 +26,7 @@ def lundPlot(data, dataName='?', binMin=0, binMax=8, binWidth=1, zoom=50):
 
   newWindow('Lund Plot for ' + dataName)
   plt.hist2d(logiDeltaR, logiZ, bins=np.linspace(binMin, binMax, (binMax-binMin)*zoom), cmap='Spectral')
+  lundifyPlt(plt)
 
 def lundDiff(sig, bg, binMin=0, binMax=8, binWidth=1, zoom=50):
   deltaR = sig[:, :, 0].flatten()
